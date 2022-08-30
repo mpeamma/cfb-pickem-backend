@@ -1,0 +1,4 @@
+flask
+cfbd
+firebase-admin
+dataclasses-json

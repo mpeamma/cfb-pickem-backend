@@ -1,0 +1,25 @@
+version: "3.2"
+services:
+  firestore_emulator:
+    image: mtlynch/firestore-emulator
+    environment:
+      - FIRESTORE_PROJECT_ID=local-firestore
+      - PORT=8200
+    ports:
+      - 8200:8200
+  app:
+    build:
+      context: ./
+    environment:
+      - FIRESTORE_EMULATOR_HOST=firestore_emulator:8200
+      - FIRESTORE_PROJECT_ID=local-firestore
+      - GOOGLE_APPLICATION_CREDENTIALS=/keys/cfb-pickem-backend.json
+      - FLASK_DEBUG=1
+      - FLASK_ENV=local
+    volumes:
+      - ./src:/app/src
+      - ~/keys:/keys
+    ports:
+      - "5000:5000"
+    depends_on:
+      - firestore_emulator
