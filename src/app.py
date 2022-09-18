@@ -1,14 +1,15 @@
 import firebase_admin
 from flask import Flask
+from flask_cors import CORS
 from dotenv import load_dotenv
 from controllers.group_controller import groups_api
 from controllers.schedule_controller import schedule_api
 from controllers.selection_controller import selection_api
 from controllers.game_set_controller import game_set_api
 
-
 load_dotenv(".env.local")
 app = Flask(__name__)
+CORS(app)
 
 app.register_blueprint(groups_api, url_prefix="/api/groups")
 app.register_blueprint(schedule_api, url_prefix="/api/schedule")

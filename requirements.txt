@@ -1,4 +1,5 @@
 flask
+flask-cors
 cfbd
 firebase-admin
 dataclasses-json

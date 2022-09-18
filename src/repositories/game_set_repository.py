@@ -8,7 +8,7 @@ class GameSetRepository(FirestoreRepository[GameSet]):
     def __init__(self):
         super().__init__("game_sets")
 
-    def get_by_week(self, group: int, year: int, week: int):
+    def get_by_week(self, group: str, year: int, week: int):
         coll = self.db.collection(self.collection_name)
         query = coll.where("week", "==", week).where("group_id", "==", group).where("year", "==", year)
         return next(query.stream())
