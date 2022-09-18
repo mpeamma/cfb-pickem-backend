@@ -1,3 +1,4 @@
+import uuid
 from flask import Blueprint, request, current_app
 from models.group import Group
 from repositories.group_repository import GroupRepository
@@ -21,8 +22,10 @@ def get_group(group_id):
 
 @groups_api.route("/", methods=["POST"])
 @authorize
-def groups_create(user):
+def group_create(user):
     group = Group.from_dict(request.get_json())
+    group.creator = user["email"]
+    group.id = str(uuid.uuid4())
     GroupRepository().create(group)
     return group.to_dict(), 200
 

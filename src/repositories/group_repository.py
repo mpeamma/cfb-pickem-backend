@@ -10,5 +10,5 @@ class GroupRepository(FirestoreRepository[Group]):
 
     def get_by_user(self, user):
         coll = self.db.collection(self.collection_name)
-        query = coll.where("user_ids", "array_contains", user["email"])
+        query = coll.where("users", "array_contains", user["email"])
         return query.stream()
