@@ -12,3 +12,8 @@ class GameSetRepository(FirestoreRepository[GameSet]):
         coll = self.db.collection(self.collection_name)
         query = coll.where("week", "==", week).where("group_id", "==", group).where("year", "==", year)
         return next(query.stream())
+
+    def get_by_group(self, group):
+        coll = self.db.collection(self.collection_name)
+        query = coll.where("group_id", "==", group)
+        return query.stream()

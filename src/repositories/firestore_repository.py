@@ -18,16 +18,18 @@ class FirestoreRepository(Generic[T]):
         return doc_ref.get()
 
     def create(self, item: T):
-        doc_ref = self.db.collection(self.collection_name).document(item.id)
+        item_id = str(uuid.uuid4())
+        item.id = item_id
+        doc_ref = self.db.collection(self.collection_name).document(item_id)
         doc_ref.set(item.to_dict())
         return item
 
     def create_batch(self, items: List[T]):
         batch = self.db.batch()
         for item in items:
-            id = str(uuid.uuid4())
-            item.id = id
-            docRef = self.db.collection(self.collection_name).document(id)
+            item_id = str(uuid.uuid4())
+            item.id = item_id
+            docRef = self.db.collection(self.collection_name).document(item_id)
             batch.set(docRef, item.to_dict())
         batch.commit()
 
